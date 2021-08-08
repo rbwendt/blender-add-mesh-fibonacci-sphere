@@ -1,4 +1,4 @@
 # blender-add-mesh-fibonacci-sphere
-Add a menu item under Addd Mesh to add a fibonacci sphere
+Adds a menu item under Add > Mesh to create a Fibonacci Sphere with an evenly distributed number of vertices. 
 
 ![shows it working](Video.gif)
