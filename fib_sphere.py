@@ -17,13 +17,14 @@ import bmesh
 from bpy import context
 from bpy_extras import object_utils
 from bpy.props import IntProperty
+from bpy.props import FloatProperty
 
-def fib_sphere(n):
+def fib_sphere(n,s):
     golden_ratio = (1 + 5**0.5)/2
     i = arange(0, n)
     theta = 2 *pi * i / golden_ratio
     phi = arccos(1 - 2*(i+0.5)/n)
-    coords = array([cos(theta) * sin(phi), sin(theta) * sin(phi), cos(phi)])
+    coords = array( [s*(cos(theta) * sin(phi)), s*(sin(theta) * sin(phi)), s*cos(phi)])
 
     ob_name = 'Fibonacci_Sphere'
     me = bpy.data.meshes.new(ob_name + " Mesh")
@@ -50,9 +51,19 @@ class FibonacciSphere(bpy.types.Operator, object_utils.AddObjectHelper):
         min = 4, max = 10000,
         description="Number of vertices"
     )
+    spSize: FloatProperty(
+        name="Radius of sphere",
+        default = 1.0,
+        min = 0.001, max = 1000.0,
+        description="Radius of sphere"
+    )
+
     def draw(self, context):
         layout = self.layout
-        layout.prop(self, 'vertices', expand=True)			 
+        col = layout.column()
+        col.prop(self, 'vertices', expand=True)
+        col.prop(self, 'spSize', expand=True)
+        #layout.prop(self, 'vertices', expand=True)			 
         #if self.change == False:
     @classmethod
     def poll(cls, context):
@@ -63,7 +74,7 @@ class FibonacciSphere(bpy.types.Operator, object_utils.AddObjectHelper):
             ('Fibonacci' in context.active_object.data.keys()) and (self.change == True):
             obj = context.active_object
             bpy.context.collection.objects.unlink(obj)    
-        fib_sphere(self.vertices)
+        fib_sphere(self.vertices, self.spSize)
         return {'FINISHED'}
     
     def invoke(self, context, event):
