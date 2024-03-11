@@ -2,7 +2,7 @@ bl_info = {
     "name": "Fibonacci Sphere",
     "author": "Ben Wendt",
     "version": (0, 0, 1),
-    "blender": (2, 79, 0),
+    "blender": (3, 6, 4),
     "location": "VIEW3D > ADD > Mesh",
     "description": "Add a Fibonacci Sphere with an evenly distributed number of vertices",
     "warning": "",
